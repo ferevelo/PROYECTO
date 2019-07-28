@@ -1,0 +1,127 @@
+CREATE TABLE "DATOS INFORMATIVOS"
+(
+  "Id_Docente" serial NOT NULL,
+  "Nombre" text,
+  "Apellido" text,
+  "Fecha_Nacimiento" date,
+  "Cedula" numeric,
+  "Direccion" text,
+  "Telefono_Celular" numeric,
+  "Convencional" numeric,
+  "Correo_Electronico" text,
+  "Lugar_Nacimiento" text,
+  "Nacionalidad" text,
+  "Estado_Civil" text,
+  "Tipo_Sangre" text,
+	titulos_id integer,	
+	experiencia_id integer,
+	institucion_id integer,	
+	capacitacion_id integer,
+	publicaciones_id integer,	
+	vinculacion_id integer,
+	
+  CONSTRAINT "Id_Docente" PRIMARY KEY ("Id_Docente"),
+  CONSTRAINT titulo_obtenidos_id_fkey FOREIGN KEY (titulos_id)
+      REFERENCES titulos_obtenidos(id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+      
+     
+  CONSTRAINT experiencia_id_fkey FOREIGN KEY (experiencia_id)
+      REFERENCES experiencia_laboral(id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+
+        CONSTRAINT institucion_id_fkey FOREIGN KEY (experiencia_id)
+      REFERENCES referencia_laboral(id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+
+       CONSTRAINT capacitacion_id_fkey FOREIGN KEY (capacitacion_id)
+      REFERENCES capacitacion(id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+
+         CONSTRAINT publicaciones_id_fkey FOREIGN KEY (publicaciones_id)
+      REFERENCES publicaciones(id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+
+      CONSTRAINT vinculacion_id_fkey FOREIGN KEY (vinculacion_id)
+      REFERENCES vinculacion(id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "DATOS INFORMATIVOS"
+  OWNER TO postgres;
+  
+--TABLA TITULOS OBTENIDOS
+  CREATE TABLE titulos_obtenidos
+(
+  id serial NOT NULL,
+  nivel character varying(40) NOT NULL,
+  titulo character varying(40) NOT NULL,
+  universidad character varying(40) NOT NULL,
+  ciudad character varying(40) NOT NULL,
+  fecha_grado date NOT NULL,
+  CONSTRAINT titulos_pkey PRIMARY KEY (id)
+)
+
+--TABLA EXPERIENCIA LABORAL
+  CREATE TABLE experiencia_laboral
+(
+  id serial NOT NULL,
+  experiencia character varying(40) NOT NULL,
+  institucion character varying(40) NOT NULL,
+  catedra character varying(40) NOT NULL,
+  desde date NOT NULL,
+  hsata date NOT NULL,
+  CONSTRAINT experiencia_pkey PRIMARY KEY (id)
+)
+
+
+--TABLA REFERENCIAS LABORALES
+  CREATE TABLE referencia_laboral
+(
+  id serial NOT NULL,
+  institucion character varying(40) NOT NULL,
+  jefe_inmediato character varying(40) NOT NULL,
+  telefono numeric NOT NULL,
+ 
+  CONSTRAINT institucion_pkey PRIMARY KEY (id)
+)
+
+--TABLA CAPACITACION
+  CREATE TABLE capacitacion
+(
+  id serial NOT NULL,
+  capacitacion character varying(40) NOT NULL,
+  tipo_evento character varying(40) NOT NULL,
+  institucion character varying(40) NOT NULL,
+  numero_hora numeric NOT NULL,
+ fecha_inicial date NOT NULL,
+ fecha_final date NOT NULL,
+  CONSTRAINT capacitacion_pkey PRIMARY KEY (id)
+)
+
+--TABLA PUBLICACIONES
+  CREATE TABLE publicaciones
+(
+  id serial NOT NULL,
+  tipo_publicacion character varying(40) NOT NULL,
+  titulo character varying(40) NOT NULL,
+  editorial character varying(40) NOT NULL,
+  anio  character varying(40) NOT NULL,
+ 
+  CONSTRAINT publicaciones_pkey PRIMARY KEY (id)
+)
+
+--TABLA VINCULACION CON LA COLECTIVIDAD
+  CREATE TABLE vinculacion
+(
+  id serial NOT NULL,
+  proyecto character varying(40) NOT NULL,
+ institucion character varying(40) NOT NULL,
+  
+  anio  character varying(40) NOT NULL,
+ 
+  CONSTRAINT vinculacion_pkey PRIMARY KEY (id)
+)
+
